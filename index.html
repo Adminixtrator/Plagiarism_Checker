@@ -15,6 +15,8 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ubuntu.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/toastr.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fileDuplicate.css') }}">
+        <link rel="icon" type="png" href="{{ url_for('static', filename='images/ico.png') }}">
+        
     <title>Plagiarism Checker</title>
 	
 	<style>
@@ -31,18 +33,34 @@
 		body{
 			background-color: #c7c1c1;
 			color: #6a1ba7;
+      padding: 3%;
 		}
 		.card-text{
 			font-size: 12px;
 		}
+    .topper{
+      padding: 10px;
+      
+    }
+    .card-header{
 
-		
+    
+    }
+    .left{
+      width: fit-content;
+
+    }
+		.right{
+
+    }
+
+
 	</style>
   </head>
   <body>
 
   	 <header>
-          <nav class="navbar navbar-expand-lg navbar-light scrolling-navbar fixed-top" style="background-color: rgb(255, 255, 255); color:blueviolet;">
+          <nav class="navbar navbar-expand-lg navbar-light scrolling-navbar fixed-top shadow-sm" style="background-color: rgb(255, 255, 255); color:blueviolet;">
             <span id="pck" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; color: blueviolet;">pck.com</span>
             </button>
           
@@ -53,18 +71,21 @@
 
     <div class="container-fluid mt-5 pt-5" style="min-height: 100vh; padding: 5px; animation-timing-function: linear; font-family: roboto, Courier;" >
 
-<div class="col-lg-6">
-<div class="card w-90" style="background-color: #994ce0; padding-right: 2px; padding-left: 2px; padding-top: 2px;">
-    	<div class="card text-white bg-info mb-3">
-  <div class="card-header"></div>
-  <div class="card-body">
-    <h5 class="card-title">Instructions</h5>
-    <ul>
-    <li class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</li>
-    <li class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</li>
-  </div>
+<div class="topper">
+
+<div class="right">
+  <h3 class="card-header">About</h3>
+
 </div>
+
+<!--------------------|  LEFT  |----------------------->
+
+<div class="left">
+  <h3 class="card-header">Instructions</h3>
+
 </div>
+
+
 </div>
 
 <form method="POST">
@@ -72,7 +93,7 @@
 <div class="col-lg-6" style="margin-top: 1.5em">
 	<p class="lead" style="color: blueviolet;"><b>Upload file</b></p>
 <div class="custom-file">
-  <input type="file" class="custom-file-input" id="customFile">
+  <input type="file" class="custom-file-input" name="file" id="customFile">
   <label class="custom-file-label" for="customFile" style="background-color: transparent; border: 1px solid blueviolet; border-radius: 5px; color: blueviolet;">{{ filename }}</label>
 </div>
 <button type="submit" class="btn btn-transparent" style="color: blueviolet; border: 1px solid blueviolet; margin-top: 1.5em;">Search</button>
