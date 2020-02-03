@@ -113,7 +113,7 @@ def homepage():
             except:
                 end_result = "Some scrambled texts gotten, hence, no result found. \nPlease check your input and try again."	#-----------------------------exception 
 
-    return render_template('index.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
+    return render_template('index.html')#, frequency=frequency, comments=comments, probables=probables, end_result=end_result)
 
 
 # Handler for text input -------------------------------------
