@@ -1,7 +1,8 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, jsonify, redirect, url_for, request
 from urlextract import URLExtract
 from googleapiclient.discovery import build
+from werkzeug.utils import secure_filename
 
 #----------------------|  ASSIGNMENT  |--------------------------------
 extractor = URLExtract()
@@ -62,29 +63,57 @@ def homepage():
             return render_template('index.html', filename='No file selected')
 
         if myfile and allowed_files(myfile.filename):
-            txt = ''
-            open_txt(str(myfile),txt)
+            filename = secure_filename(myfile.filename)
+            myfile.save(os.path.join('./',filename))
+            # read the file
+            with open(filename) as f:
+                txt = f.read()
+            # Handler length of words
+            try:
+                txt = txt.split()[0:50]
+            except:
+                txt = txt.split()[0::]
             # Handler for google search
             result = google_search(txt, my_api_key, my_cse_id, num=2)
             gen = list(result)
             # Getting things ready
-            a = []
+            end_result = []
+            probables = []
             for url in extractor.gen_urls(str(gen[0])):
-                a.append(url)
+                end_result.append(url)
 
-            i = 1
-            for all in a:
-                if a[2] == all:
-                    i=i+1   
-            print(i)	#------------------------------------------------frequency
+            frequency = 1
+            for all in end_result:
+                if end_result[2] == all:
+                    frequency=frequency+1   
+            if frequency == 1: 
+                frequency = 20
+                comments = "A few words were found to be similar, this text doesn't seem to be plagirised.\nYou can try entering a longer length of text."
+            elif frequency == 2:
+                frequency = 40
+                comments = "There is a high possibility of this text being plagiarised"
+            elif frequency == 3:
+                frequency = 60
+                comments = "Our system detected a lot of plagiarised texts in your content"            
+            elif frequency == 4:
+                frequency = 80
+                comments = "The text has most of it's contents plagiarised"
+            elif frequency >= 5:
+                frequency = 100
+                comments = "Warning!! This text is plagiarised."
+            #-------------------------------------------------------------------------------------------------------------------------------------------------frequency $ comments   ~~~~~~Done!
             for d in extractor.gen_urls(str(gen[0])):
-                print(d)	#---------------------------------------------probables
+                if d != end_result[2] and str(end_result[2]).find(str(extractor.gen_urls(str(gen[0])))) != 0:	
+                    probables.append(all)
+            probables = '\n'.join(probables)#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
+            # Check for valid result
             try:
-                print(a[2])	#link
+                end_result = end_result[2]
+                print(end_result)	#-------------------------------------------------------------------------------------------------------------------------end_result     ~~~~~~~~Done!
             except:
-                print('match not found')	#exception 
+                end_result = "Some scrambled texts gotten, hence, no result found. \nPlease check your input and try again."	#-----------------------------exception 
 
-    return render_template('index.html')
+    return render_template('index.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
 
 
 # Handler for text input -------------------------------------
