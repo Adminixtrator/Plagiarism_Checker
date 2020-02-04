@@ -1,17 +1,1 @@
-adjkhjklhlkjahkhnlkhafvvakjvanavnkjnvajknkjnvakjnjknvajknvjkanjknvajknjvakna kjgchggggggggghkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkffffffffjjjjjjj
-jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwoooooooooooooooooooooooooooooooooooo
-oooooooooqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqccccccccccccccccccccccc
-ccccccooooooooooooooooooooooooooooooooooooooooooooogggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-gggggggggggggggggggggggggg||||||||||||||||||||||||||||||||||||||||||||||||||||
-|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
+5.0 on Jan 21, 2020. Its source code is for download from its site. You may also use the package manager to install wine. Wine is Source implementation of the Windows API
