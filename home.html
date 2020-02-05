@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="jpg/png" href="https://res.cloudinary.com/adminixtrator/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1580859216/87-872184_kommentit-eye-and-magnifying-glass.jpg">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Cabin|Caveat|Courgette|Cuprum|Josefin+Sans|Satisfy&display=swap" rel="stylesheet">
     <style>
@@ -43,7 +44,7 @@
         <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
         <hr class="my-4">
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <a class="btn btn-outline-danger" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Instructions</a>
+        <a class="btn btn-danger" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Instructions</a>
       </div>
 
       <!-------------------------------------------------|  INSTRUCTIONS & ABOUT  |-------------------------------------------------------------------->
@@ -93,7 +94,13 @@
         </div>
       </div>
 
-      <!-------------------------------------------------|  CAROUSEL  |-------------------------------------------------------------------->
+      <!-------------------------------------------------|  END RESULT  |-------------------------------------------------------------------->
+
+      {% if end_result or probables or comments or frequency %}
+      <div class="dotted-container" style="border-radius: 10px; margin-top: 2em;"><p style="font-family: 'Courier New', Courier, monospace; font-size: 1.5em; color: #000;"><b>Search Results:</b></p>
+      <p style="margin: 1em; border: 1px solid #0fbcf9; padding: 7px; border-radius: 7px; color: blueviolet; font-size: 0.8em;">{{ end_result }}</p></div>
+      <p class="p"><b>Probables: </b><span>{{ probables }}</span></p><p class="p"><b>Comments: </b><span>{{ comments }}</span></p><p class="p"><b>Frequency: </b><span>{{ frequency }}</span></p>
+      {% endif %}
 
 
     </div>

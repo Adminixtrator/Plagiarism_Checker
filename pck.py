@@ -49,7 +49,7 @@ def open_txt(filename,content):
 # Homepage
 @app.route('/')
 def homepage():
-    return render_template('index.html')
+    return render_template('home.html')
 
 # Handler for file upload -----------------------------
 @app.route('/file', methods=['GET','POST'])
@@ -58,12 +58,12 @@ def filehandle():
     if request.method == 'POST':
         # check if file is present
         if 'myfile' not in request.files:
-            return render_template('index.html', filename='Click to select file')
+            return render_template('home.html', filename='Click to select file')
         # Store the file in the input
         myfile = request.files['myfile']
         # check if a file is selected
         if myfile.filename == '':
-            return render_template('index.html', filename='No file selected')
+            return render_template('home.html', filename='No file selected')
 
         if myfile and allowed_files(myfile.filename):
             filename = secure_filename(myfile.filename)
@@ -117,12 +117,12 @@ def filehandle():
                 end_result = "Some scrambled texts gotten, hence, no result found. \nPlease check your input and try again."
                 frequency = '0%'	#-----------------------------exception 
 
-            return render_template('index.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
+            return render_template('home.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
         
         else:
-            return render_template('index.html', end_result="An error occured! Please check your file type and try again.")
+            return render_template('home.html', end_result="An error occured! Please check your file type and try again.")
 
-    return render_template('index.html')
+    return render_template('home.html')
 
 
 # Handler for text input -------------------------------------
@@ -131,7 +131,7 @@ def texthandle():
     # check if text is available
     if request.method == 'POST':
         if 'text' not in request.files:    
-            return render_template('index.html')
+            return render_template('home.html')
 
         txt = request.form['text']
 
@@ -180,9 +180,9 @@ def texthandle():
                 end_result = "Some scrambled texts gotten, hence, no result found. \nPlease check your input and try again."
                 frequency = '0%'	#-----------------------------exception 
 
-            return render_template('index.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
+            return render_template('home.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
 
-    return render_template('index.html')
+    return render_template('home.html')
 
     
 if __name__ == '__main__':
