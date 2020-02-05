@@ -5,52 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Caveat|Courgette|Cuprum|Josefin+Sans|Satisfy&display=swap" rel="stylesheet">
+    <style>
+        .display-4{
+            font-family: 'Caveat', cursive;
+        }
+        .btn btn-success btn-md,.btn btn-success,p,.lead,input,a,button{
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        body,.span{
+            background-color: #fff;
+            color: black;
+        }
+        .text{
+            border: 2px solid #0fbcf9;
+            border-radius: 7px;
+            background-color: transparent;
+            color: blueviolet;
+            font-size: 0.8em;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        span{
+            color: blueviolet;
+            font-size: 0.8em;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+    </style>
     <title>Plagiarism Checker</title>
 </head>
 <body>
 
     <!-------------------------------------------------|  GREETINGS  |-------------------------------------------------------------------->
-
-    <div class="jumbotron">
-        <h1 class="display-4">Hello, world!</h1>
+    <div class="container mb-4">
+    <div class="jumbotron mt-4 pt-6 pb-4 bg-warning">
+        <button class="btn btn-outline-success" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2" style="border-radius: 50%; float: right;">About</button>
+        <h1 class="display-4">Plagiarism Checker</h1>
         <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
         <hr class="my-4">
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-      </div>
-
-      <!-------------------------------------------------|  CAROUSEL  |-------------------------------------------------------------------->
-
-      <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-              <img src="..." class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-          </div>
-        </div>
+        <a class="btn btn-outline-danger" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Instructions</a>
       </div>
 
       <!-------------------------------------------------|  INSTRUCTIONS & ABOUT  |-------------------------------------------------------------------->
 
-      <button type="button" class="btn btn-success" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-        Instructions
-      </button>
-      <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-        About
-      </button>
-
-      <!-------------------------------------------------|  FILE & TEXT  |-------------------------------------------------------------------->
-
-      <p>
-        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Toggle second element</button>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>
-      </p>
       <div class="row">
         <div class="col">
           <div class="collapse multi-collapse" id="multiCollapseExample1">
@@ -59,9 +56,52 @@
             </div>
           </div>
         </div>
+        <div class="col">
+          <div class="collapse multi-collapse" id="multiCollapseExample2">
+            <div class="card card-body">
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+      <!-------------------------------------------------|  FILE & TEXT  |-------------------------------------------------------------------->
+      <p>
+        <a class="btn btn-info" data-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample3">Upload a file</a>
+        <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4" style="float: right;">Enter a text</button>
+      </p>
+      <div class="row mt-4 mb-4">
+        <div class="col">
+          <div class="collapse multi-collapse" id="multiCollapseExample3">
+            <div class="card card-body">
+                
+                <div class="row" id="row"><form method="POST" class="col-sm-6" enctype="multipart/form-data" action="/file"><p class="lead" style="color: #2f3640;"><b>File</b></p><input type="file" name="myfile" id="myfile" style="color: #2f3640;" id="file-uploaded"><span>{{ filename }}</span>
+                    <button type="submit" class="btn btn-transparent" style="color: #0fbcf9; border: 1px solid #0fbcf9; margin-top: 1.5em;  margin-bottom: 4%;">Search</button></form>
+                    
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="collapse multi-collapse" id="multiCollapseExample4">
+            <div class="card card-body">
+                <form method="POST" enctype="multipart/form-data" class="col-sm-6" action="/text"><p class="lead" style="color: #2f3640;"><b>Text</b></p><textarea rows="10" cols="80" class="text" name="text" placeholder="Please enter your text here.." style="padding: 5px;">{{ text }}</textarea>
+                    <!--  <a href="/txt">submit</a> --><br><button type="submit" class="btn btn-transparent" style="color: #0fbcf9; border: 1px solid #0fbcf9; margin-top: 1.5em;">Search</button></form></div>
+                    
+            </div>
+          </div>
+        </div>
       </div>
 
+      <!-------------------------------------------------|  CAROUSEL  |-------------------------------------------------------------------->
 
+
+    </div>
+
+    <footer class="container mt-6 mb-4 pt-6" style="text-align: center; font-size: 0.8em; margin-top: 8em;">
+        <a href="https://twitter.com/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_30/v1580846986/twitter.jpg" alt="Twitter"></a>  <a href="https://linkedin.com/in/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_20/v1580846977/linkedin.png" alt="Github"></a>  <a href="https://github.com/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_35/v1580865391/github.png" alt="linkedIn"></a><br>
+        <span class="span">&copy;2020 ADMINIXTRATOR</span>
+    </footer>
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
