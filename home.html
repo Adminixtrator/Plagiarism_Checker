@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Cabin|Caveat|Courgette|Cuprum|Josefin+Sans|Satisfy&display=swap" rel="stylesheet">
     <style>
-        .display-4{
+        .display-4,.p{
             font-family: 'Caveat', cursive;
         }
         .btn btn-success btn-md,.btn btn-success,p,.lead,input,a,button{
@@ -18,99 +18,103 @@
             background-color: #fff;
             color: black;
         }
-        .text{
+        #text{
             border: 2px solid #0fbcf9;
             border-radius: 7px;
             background-color: transparent;
-            color: blueviolet;
+            color: #fff;
             font-size: 0.8em;
             font-family: 'Josefin Sans', sans-serif;
         }
-        span{
-            color: blueviolet;
+        span,.card-body{
+            color: #fff;
             font-size: 0.8em;
             font-family: 'Josefin Sans', sans-serif;
+        }
+        .p,.card-title{
+            font-size: 1.4em; color: white;
         }
     </style>
     <title>Plagiarism Checker</title>
 </head>
 <body>
-
     <!-------------------------------------------------|  GREETINGS  |-------------------------------------------------------------------->
-    <div class="container mb-4">
-    <div class="jumbotron mt-4 pt-6 pb-4 mb-2 bg-warning">
-        <button class="btn btn-outline-success" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2" style="border-radius: 50%; float: right;">About</button>
+    <div class="container mb-0">
+    <div class="jumbotron mt-4 pt-6 pb-4 mb-2 bg-warning rounded-bottom">
         <h1 class="display-4">Plagiarism Checker</h1>
         <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
         <hr class="my-4">
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <a class="btn btn-danger" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Instructions</a>
       </div>
-
-      <!-------------------------------------------------|  INSTRUCTIONS & ABOUT  |-------------------------------------------------------------------->
-
-      <div class="row mb-2">
-        <div class="col">
-          <div class="collapse multi-collapse" id="multiCollapseExample1">
-            <div class="card card-body bg-warning col-md">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="collapse multi-collapse" id="multiCollapseExample2">
-            <div class="card card-body bg-success text-light">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-            </div>
-          </div>
-        </div>
-      </div>
-    
-
       <!-------------------------------------------------|  FILE & TEXT  |-------------------------------------------------------------------->
-      <p>
-        <a class="btn btn-info" data-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample3">Upload a file</a>
-        <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4" style="float: right;">Enter a text</button>
-      </p>
-      <div class="row mt-4 mb-4">
-        <div class="col">
-          <div class="collapse multi-collapse" id="multiCollapseExample3">
-            <div class="card card-body">
-                
-                <div class="row" id="row"><form method="POST" class="col-sm-6" enctype="multipart/form-data" action="/file"><p class="lead" style="color: #2f3640;"><b>File</b></p><input type="file" name="myfile" id="myfile" style="color: #2f3640;" id="file-uploaded"><span>{{ filename }}</span>
-                    <button type="submit" class="btn btn-transparent" style="color: #0fbcf9; border: 1px solid #0fbcf9; margin-top: 1.5em;  margin-bottom: 4%;">Search</button></form>
-                    
+      <div class="row mb-4 mt-4">
+        <div class="col-sm-6 mb-2">
+          <div class="card border-primary bg-dark rounded-bottom pb-5">
+            <div class="card-body">
+              <h5 class="card-title">File</h5>
+              <form method="POST" class="col-sm-6" enctype="multipart/form-data" action="/file"><input type="file" name="myfile" style="color: #0fbcf9; padding: 2px;" id="myfile" style="color: #2f3640;" id="file-uploaded">
+                <button type="submit" class="btn btn-transparent" style="color: #0fbcf9; border: 1px solid #0fbcf9; margin-top: 1.5em;  margin-bottom: 4%;">Search</button></form>
+              
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="collapse multi-collapse" id="multiCollapseExample4">
-            <div class="card card-body">
-                <form method="POST" enctype="multipart/form-data" class="col-sm-6" action="/text"><p class="lead" style="color: #2f3640;"><b>Text</b></p><textarea rows="10" cols="80" class="text" name="text" placeholder="Please enter your text here.." style="padding: 5px;">{{ text }}</textarea>
-                    <!--  <a href="/txt">submit</a> --><br><button type="submit" class="btn btn-transparent" style="color: #0fbcf9; border: 1px solid #0fbcf9; margin-top: 1.5em;">Search</button></form></div>
-                    
+        <div class="col-sm-6">
+          <div class="card border-primary bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">Text</h5>
+              <form method="POST" enctype="multipart/form-data" class="col-sm-6" action="/text"><textarea rows="10" cols="120" id="text" class="col-sm-6 col-md-12 col-lg-12" name="text" placeholder="Please enter your text here.." style="padding: 5px;">{{ text }}</textarea>
+                <!--  <a href="/txt">submit</a> --><br><button type="submit" class="btn btn-transparent" style="color: #0fbcf9; border: 1px solid #0fbcf9; margin-top: 1.5em;">Search</button></form>
+              
             </div>
           </div>
         </div>
       </div>
-
       <!-------------------------------------------------|  END RESULT  |-------------------------------------------------------------------->
+      <div class="jumbotron bg-primary mb-6">
+        <div class="dotted-container" style="border-radius: 10px; margin-top: 2em;"><p style="font-family: 'Courier New', Courier, monospace; font-size: 1.8em; color: white; font-family: 'Caveat', cursive;"><b>Search Results:</b></p>
+        {% if end_result or probables or comments or frequency %}
+        <p class = "text-warning" style="color: white; font-family: 'Josefin Sans', sans-serif; font-size: 0.9em;"> Our systems detected a lot of plagiarised texts from this site:</p>
+      <p style="margin: 1em; border: 1px solid #0fbcf9; padding: 7px; border-radius: 7px; color: white; font-size: 0.8em;">{{ end_result }}</p></div>
+      <p class="p"><b>Probables: </b></p>
 
-      {% if end_result or probables or comments or frequency %}
-      <div class="dotted-container" style="border-radius: 10px; margin-top: 2em;"><p style="font-family: 'Courier New', Courier, monospace; font-size: 1.5em; color: #000;"><b>Search Results:</b></p>
-      <p style="margin: 1em; border: 1px solid #0fbcf9; padding: 7px; border-radius: 7px; color: blueviolet; font-size: 0.8em;">{{ end_result }}</p></div>
-      <p class="p"><b>Probables: </b><span>{{ probables }}</span></p><p class="p"><b>Comments: </b><span>{{ comments }}</span></p><p class="p"><b>Frequency: </b><span>{{ frequency }}</span></p>
+      <p>
+        <a class="btn btn-success" data-toggle="collapse" href="#multiCollapseExample5" role="button" aria-expanded="false" aria-controls="multiCollapseExample5">View</a>
+      </p>  
+      <div  class="row mt-4 mb-4 bg-transparent">
+        <div class="col">
+          <div class="collapse multi-collapse" id="multiCollapseExample5">
+            <div class="card card-body bg-transparent">
+                
+                <div class="row" id="row" style="margin: 1em; border: 1px solid #0fbcf9; padding: 7px; border-radius: 7px; color: white; font-size: 0.8em;">
+         <!--           {% if probables %}
+
+                    {% for all in probables %}
+                    
+                    {% print(all) %}
+
+                    {% endfor %}
+
+                    {% endif %}
+         -->
+                  {{ probables }}
+                    
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <p class="p"><b>Comments: </b></p><span>{{ comments }}</span><p class="p"><b>Frequency: </b></p><span>{{ frequency }}</span>
       {% endif %}
-
-
+      <span>{{ error_message }}</span>
+        </div>
     </div>
+
+    {{ probables }}
 
     <footer class="container mt-6 mb-4 pt-6" style="text-align: center; font-size: 0.8em; margin-top: 8em;">
         <a href="https://twitter.com/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_30/v1580846986/twitter.jpg" alt="Twitter"></a>  <a href="https://linkedin.com/in/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_20/v1580846977/linkedin.png" alt="Github"></a>  <a href="https://github.com/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_35/v1580865391/github.png" alt="linkedIn"></a><br>
         <span class="span">&copy;2020 ADMINIXTRATOR</span>
     </footer>
-
-
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

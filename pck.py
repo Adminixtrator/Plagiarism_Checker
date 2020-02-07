@@ -3,17 +3,21 @@ from flask import Flask, render_template, jsonify, redirect, url_for, request
 from urlextract import URLExtract
 from googleapiclient.discovery import build
 from werkzeug.utils import secure_filename
+import re
+import textract as tt
 
 #----------------------|  ASSIGNMENT  |--------------------------------
 extractor = URLExtract()
 my_api_key = "AIzaSyCaugQenN9PpH5I6agQTcFlkf8hbyAEOKw"
 my_cse_id = "000757437883487112859:wtcjp5mwqmu"
+regex = re.compile(r'\w+\://\w+\.\w+')
+gool = re.compile(r'\w+\.\w+')
 
 app = Flask(__name__, template_folder = './')
 
 #---------------------------------------------------------------------
 # allow specific files
-ALLOWED_FILES = set(['pdf', 'docx', 'odt', 'txt'])
+ALLOWED_FILES = set(['pdf', 'docx', 'odt', 'txt', 'html', 'doc'])
 
 def allowed_files(filename):
     return '.' in filename and \
@@ -22,7 +26,7 @@ def allowed_files(filename):
 #--------------------------------------------------------------------------
 
 # allow specific images
-ALLOWED_IMAGES = set(['png', 'jpg', 'jpeg'])
+ALLOWED_IMAGES = set(['png', 'jpg', 'jpeg', 'svg', 'ico'])
 
 def allowed_images(filename):
     return '.' in filename and \
@@ -69,21 +73,38 @@ def filehandle():
             filename = secure_filename(myfile.filename)
             myfile.save(os.path.join('./',filename))
             # read the file
-            with open(filename) as f:
-                txt = f.read()
-            # Handler length of words
+            txt = tt.process(filename)
+                # Handler length of words
+            if len(str(txt).split()[0::]) > 100:
+                error_message='Please reduce the length of text [30 - 100]'
+                os.remove('./'+filename)
+                return render_template('home.html', error_message=error_message)
+            elif len(str(txt).split()[0::]) < 30:
+                error_message='Please increase the length of text [30 - 100]'
+                os.remove('./'+filename)
+                return render_template('home.html', error_message=error_message)
             try:
-                txt = ' '.join(txt.split()[0:50])
+                txt1 = ' '.join(str(txt).split()[0:50])
+                txt2 = ' '.join(str(txt).split()[50::])
             except:
-                txt = ' '.join(txt.split()[0::])
-            # Handler for google search
-            result = google_search(txt, my_api_key, my_cse_id, num=2)
-            gen = list(result)
-            # Getting things ready
-            end_result = []
-            probables = []
-            for url in extractor.gen_urls(str(gen[0])):
-                end_result.append(url)
+                txt = ' '.join(str(txt).split()[0::])
+            # Result handler
+            try:
+                result1 = google_search(txt1, my_api_key, my_cse_id, num=2);result2 = google_search(txt2, my_api_key, my_cse_id, num=2)
+                gen1 = list(result1);gen2 = list(result2);gen = gen1+gen2
+                # Getting things ready
+                end_result = []
+                probables = []
+                for url in extractor.gen_urls(str(gen[0])):
+                    end_result1.append(url)
+            except:
+                result = google_search(txt, my_api_key, my_cse_id, num=2)
+                gen = list(result)
+                # Getting things ready
+                end_result = []
+                probables = []
+                for url in extractor.gen_urls(str(gen[0])):
+                    end_result.append(url)
 
             frequency = 1
             for all in end_result:
@@ -91,7 +112,7 @@ def filehandle():
                     frequency=frequency+1   
             if frequency == 1: 
                 frequency = '20%'
-                comments = "A few words were found to be similar, this text doesn't seem to be plagirised.\nYou can try entering a longer length of text."
+                comments = "This text doesn't seem to be plagirised.\nYou can try entering a longer length of text."
             elif frequency == 2:
                 frequency = '40%'
                 comments = "There is a high possibility of this text being plagiarised"
@@ -106,8 +127,10 @@ def filehandle():
                 comments = "Warning!! This text is plagiarised."
             #-------------------------------------------------------------------------------------------------------------------------------------------------frequency $ comments   ~~~~~~Done!
             for d in extractor.gen_urls(str(gen[0])):
-                if d != end_result[2] and str(end_result[2]).find(str(extractor.gen_urls(str(gen[0])))) != 0:	
-                    probables.append(all)
+                if d != end_result[2] and d.find(end_result[2]) != 0 and d.find('image') == 0:	
+                    for all in ALLOWED_IMAGES:
+                        if d.split('.')[len(d.split('.'))-1].find(all) != 0:
+                            probables.append(d)
             probables = '\n'.join(probables)#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
             # Check for valid result
             try:
@@ -116,6 +139,10 @@ def filehandle():
             except:
                 end_result = "Some scrambled texts gotten, hence, no result found. \nPlease check your input and try again."
                 frequency = '0%'	#-----------------------------exception 
+
+            if probables == '' or probables == ' ':
+                probables = 'None currently available'
+            os.remove('./'+filename)
 
             return render_template('home.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
         
@@ -163,15 +190,15 @@ def texthandle():
                 comments = "Our system detected a lot of plagiarised texts in your content"            
             elif frequency == 4:
                 frequency = '80%'
-                comments = "The text has most of it's contents plagiarised"
+                comments = "The text has most of it'scontents plagiarised"
             elif frequency >= 5:
                 frequency = '100%'
                 comments = "Warning!! This text is plagiarised."
             #-------------------------------------------------------------------------------------------------------------------------------------------------frequency $ comments   ~~~~~~Done!
             for d in extractor.gen_urls(str(gen[0])):
-                if d != end_result[2] and str(end_result[2]).find(str(extractor.gen_urls(str(gen[0])))) != 0:	
-                    probables.append(all)
-            probables = '\n'.join(probables)#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
+                if d != end_result[2] and d.find(regex.search(end_result[2]).group()) != 0 and d.find(gool.search(end_result[2]).group()) != 0:	
+                    probables.append(d)
+            #probables = '\n'.join(probables)#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
             # Check for valid result
             try:
                 end_result = end_result[2]
