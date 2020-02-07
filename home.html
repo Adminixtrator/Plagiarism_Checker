@@ -15,7 +15,7 @@
             font-family: 'Josefin Sans', sans-serif;
         }
         body,.span{
-            background-color: #fff;
+            background-color: ghostwhite;
             color: black;
         }
         #text{
@@ -42,7 +42,7 @@
     <div class="container mb-0">
     <div class="jumbotron mt-4 pt-6 pb-4 mb-2 bg-warning rounded-bottom">
         <h1 class="display-4">Plagiarism Checker</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <p class="lead"><i>“When a thing has been said and said well, have no scruple. Take it and copy it.”</i></p>
         <hr class="my-4">
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
       </div>
@@ -70,9 +70,9 @@
         </div>
       </div>
       <!-------------------------------------------------|  END RESULT  |-------------------------------------------------------------------->
+      {% if end_result or probables or comments or frequency %}
       <div class="jumbotron bg-primary mb-6">
         <div class="dotted-container" style="border-radius: 10px; margin-top: 2em;"><p style="font-family: 'Courier New', Courier, monospace; font-size: 1.8em; color: white; font-family: 'Caveat', cursive;"><b>Search Results:</b></p>
-        {% if end_result or probables or comments or frequency %}
         <p class = "text-warning" style="color: white; font-family: 'Josefin Sans', sans-serif; font-size: 0.9em;"> Our systems detected a lot of plagiarised texts from this site:</p>
       <p style="margin: 1em; border: 1px solid #0fbcf9; padding: 7px; border-radius: 7px; color: white; font-size: 0.8em;">{{ end_result }}</p></div>
       <p class="p"><b>Probables: </b></p>
@@ -105,11 +105,16 @@
       </div>
       <p class="p"><b>Comments: </b></p><span>{{ comments }}</span><p class="p"><b>Frequency: </b></p><span>{{ frequency }}</span>
       {% endif %}
+      {% if error_message %}
+      <div class="jumbotron bg-primary mb-6">
+        <div class="dotted-container" style="border-radius: 10px; margin-top: 2em;"><p style="font-family: 'Courier New', Courier, monospace; font-size: 1.8em; color: white; font-family: 'Caveat', cursive;"><b>Text Length</b></p>
       <span>{{ error_message }}</span>
+      </div>
+      </div>
+      {% endif %}
         </div>
     </div>
 
-    {{ probables }}
 
     <footer class="container mt-6 mb-4 pt-6" style="text-align: center; font-size: 0.8em; margin-top: 8em;">
         <a href="https://twitter.com/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_30/v1580846986/twitter.jpg" alt="Twitter"></a>  <a href="https://linkedin.com/in/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_20/v1580846977/linkedin.png" alt="Github"></a>  <a href="https://github.com/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_35/v1580865391/github.png" alt="linkedIn"></a><br>

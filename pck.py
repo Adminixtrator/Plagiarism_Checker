@@ -93,10 +93,15 @@ def filehandle():
                 result1 = google_search(txt1, my_api_key, my_cse_id, num=2);result2 = google_search(txt2, my_api_key, my_cse_id, num=2)
                 gen1 = list(result1);gen2 = list(result2);gen = gen1+gen2
                 # Getting things ready
-                end_result = []
+                end_result1 = [];end_result2 = []
                 probables = []
-                for url in extractor.gen_urls(str(gen[0])):
-                    end_result1.append(url)
+                for url in extractor.gen_urls(str(gen1[0])):
+                    end_result.append(url)
+
+                for url in extractor.gen_urls(str(gen1[0])):
+                    end_result.append(url)
+
+                end_result=end_result1+end_result2
             except:
                 result = google_search(txt, my_api_key, my_cse_id, num=2)
                 gen = list(result)
@@ -156,61 +161,84 @@ def filehandle():
 @app.route('/text', methods=['GET','POST'])
 def texthandle():
     # check if text is available
-    if request.method == 'POST':
-        if 'text' not in request.files:    
-            return render_template('home.html')
-
-        txt = request.form['text']
-
+    if request.method == 'POST':        
+        txt = request.form.get("text")       
+        # Handler length of text     
+        if len(str(txt).split()[0::]) > 100:
+            error_message='Please reduce the length of text [30 - 100]'
+            return render_template('home.html', error_message=error_message)
+        elif len(str(txt).split()[0::]) < 30:
+            error_message='Please increase the length of text [30 - 100]'
+            return render_template('home.html', error_message=error_message)
         try:
-            txt = ' '.join(txt.split()[0:50])
+            txt1 = ' '.join(str(txt).split()[0:50])
+            txt2 = ' '.join(str(txt).split()[50::])
         except:
-            txt = ' '.join(txt.split()[0::])
-        # Handler for google search
-        result = google_search(txt, my_api_key, my_cse_id, num=2)
-        gen = list(result)
-        # Getting things ready
-        end_result = []
-        probables = []
-        for url in extractor.gen_urls(str(gen[0])):
-            end_result.append(url)
+            txt = ' '.join(str(txt).split()[0::])
+        # Result handler
+        try:
+            result1 = google_search(txt1, my_api_key, my_cse_id, num=2);result2 = google_search(txt2, my_api_key, my_cse_id, num=2)
+            gen1 = list(result1);gen2 = list(result2); gen=gen1+gen2
+            # Getting things ready
+            end_result1 = [];end_result2 = []
+            probables = []
+            for url in extractor.gen_urls(str(gen1[0])):
+                end_result1.append(url)
+            
+            for url in extractor.gen_urls(str(gen2[0])):
+                end_result2.append(url)
+            # End result
+            end_result = end_result1+end_result2
+        except:
+            result = google_search(txt, my_api_key, my_cse_id, num=2)
+            gen = list(result)
+            # Getting things ready
+            end_result = []
+            probables = []
+            for url in extractor.gen_urls(str(gen[0])):
+                end_result.append(url)
 
         frequency = 1
         for all in end_result:
             if end_result[2] == all:
                 frequency=frequency+1   
-            if frequency == 1: 
-                frequency = '20%'
-                comments = "A few words were found to be similar, this text doesn't seem to be plagirised.\nYou can try entering a longer length of text."
-            elif frequency == 2:
-                frequency = '40%'
-                comments = "There is a high possibility of this text being plagiarised"
-            elif frequency == 3:
-                frequency = '60%'
-                comments = "Our system detected a lot of plagiarised texts in your content"            
-            elif frequency == 4:
-                frequency = '80%'
-                comments = "The text has most of it'scontents plagiarised"
-            elif frequency >= 5:
-                frequency = '100%'
-                comments = "Warning!! This text is plagiarised."
-            #-------------------------------------------------------------------------------------------------------------------------------------------------frequency $ comments   ~~~~~~Done!
-            for d in extractor.gen_urls(str(gen[0])):
-                if d != end_result[2] and d.find(regex.search(end_result[2]).group()) != 0 and d.find(gool.search(end_result[2]).group()) != 0:	
-                    probables.append(d)
-            #probables = '\n'.join(probables)#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
-            # Check for valid result
-            try:
-                end_result = end_result[2]
-                print(end_result)	#-------------------------------------------------------------------------------------------------------------------------end_result     ~~~~~~~~Done!
-            except:
-                end_result = "Some scrambled texts gotten, hence, no result found. \nPlease check your input and try again."
-                frequency = '0%'	#-----------------------------exception 
+        if frequency == 1: 
+            frequency = '20%'
+            comments = "This text doesn't seem to be plagirised.\nYou can try entering a longer length of text."
+        elif frequency == 2:
+            frequency = '40%'
+            comments = "There is a high possibility of this text being plagiarised"
+        elif frequency == 3:
+            frequency = '60%'
+            comments = "Our system detected a lot of plagiarised texts in your content"            
+        elif frequency == 4:
+            frequency = '80%'
+            comments = "The text has most of it's contents plagiarised"
+        elif frequency >= 5:
+            frequency = '100%'
+            comments = "Warning!! This text is plagiarised."
+        #-------------------------------------------------------------------------------------------------------------------------------------------------frequency $ comments   ~~~~~~Done!
+        for d in extractor.gen_urls(str(gen[0])):
+            if d != end_result[2] and d.find(end_result[2]) != 0 and d.find('image') == 0:	
+                for all in ALLOWED_IMAGES:
+                    if d.split('.')[len(d.split('.'))-1].find(all) != 0:
+                        probables.append(d)
+        probables = '\n'.join(probables)#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
+        # Check for valid result
+        try:
+            end_result = end_result[2]
+            print(end_result)	#-------------------------------------------------------------------------------------------------------------------------end_result     ~~~~~~~~Done!
+        except:
+            end_result = "Some scrambled texts gotten, hence, no result found. \nPlease check your input and try again."
+            frequency = '0%'	#-----------------------------exception 
 
-            return render_template('home.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
+        if probables == '' or probables == ' ':
+            probables = 'None currently available'
+
+        return render_template('home.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
 
     return render_template('home.html')
-
     
+
 if __name__ == '__main__':
     app.run()
