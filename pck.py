@@ -131,12 +131,10 @@ def filehandle():
                 frequency = '100%'
                 comments = "Warning!! This text is plagiarised."
             #-------------------------------------------------------------------------------------------------------------------------------------------------frequency $ comments   ~~~~~~Done!
-            for d in extractor.gen_urls(str(gen[0])):
-                if d != end_result[2] and d.find(end_result[2]) != 0 and d.find('image') == 0:	
-                    for all in ALLOWED_IMAGES:
-                        if d.split('.')[len(d.split('.'))-1].find(all) != 0:
-                            probables.append(d)
-            probables = '\n'.join(probables)#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
+            try:
+                probables = end_result[5]
+            except:
+                probables = ' '#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
             # Check for valid result
             try:
                 end_result = end_result[2]
@@ -218,12 +216,10 @@ def texthandle():
             frequency = '100%'
             comments = "Warning!! This text is plagiarised."
         #-------------------------------------------------------------------------------------------------------------------------------------------------frequency $ comments   ~~~~~~Done!
-        for d in extractor.gen_urls(str(gen[0])):
-            if d != end_result[2] and d.find(end_result[2]) != 0 and d.find('image') == 0:	
-                for all in ALLOWED_IMAGES:
-                    if d.split('.')[len(d.split('.'))-1].find(all) != 0:
-                        probables.append(d)
-        probables = '\n'.join(probables)#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
+        try:
+            probables = end_result[5]
+        except:
+            probables = ' '#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
         # Check for valid result
         try:
             end_result = end_result[2]
