@@ -29,7 +29,7 @@
         }
         span,.card-body{
             color: #fff;
-            font-size: 0.8em;
+            font-size: 0.9em;
             font-family: 'Josefin Sans', sans-serif;
         }
         .p,.card-title{
@@ -40,10 +40,10 @@
 </head>
 <body>
     <!-------------------------------------------------|  GREETINGS  |-------------------------------------------------------------------->
-    <div class="container mb-0" style="width: 70%;">
+    <div class="container mb-0">
       {% if connection_problem %}
       <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" style="font-family: 'Josefin Sans', sans-serif;">
-        <strong>An error occurred!</strong> No internet access.
+        <strong>An error occurred!</strong> I am unable to connect to the internet.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -65,7 +65,7 @@
       </div>
       <!-------------------------------------------------|  FILE & TEXT  |-------------------------------------------------------------------->
       <div class="row mb-4 mt-4">
-        <div class="col-sm-1 mb-2">
+        <div class="col-sm-6 mb-2">
           <div class="card border-primary bg-dark rounded-bottom pb-5">
             <div class="card-body">
               <h5 class="card-title">File</h5>
@@ -75,7 +75,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-12 w-100">
+        <div class="col-sm-6 w-100">
           <div class="card border-primary bg-dark">
             <div class="card-body" style="min-width: 100%;">
               <h5 class="card-title">Text</h5>
@@ -129,8 +129,11 @@
           <span>{{ error_message }}</span>
       {% endif %}
       {% if too_long %}
-      <br><span>Click continue if you want to select the first <b>100</b> words of your text</span>
-      <br><button class="button-warning-md">Continue</button>
+      <br><span>Click continue if you want to select the first <b>100</b> words of your text</span><br>
+      <form action="/alt" method="POST" enctype="multipart/form-data">
+        <textarea hidden name="hundred">{{ alternative }}</textarea>
+      <br><button type="submit" class="btn btn-warning btn-md">Continue</button>
+      </form>
       {% endif %}
       </div>
       </div>
