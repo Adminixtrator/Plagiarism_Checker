@@ -338,8 +338,5 @@ def hundred():
 
     return render_template('home.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
 
-
-
-
 if __name__ == '__main__':
     app.run()
