@@ -77,8 +77,9 @@ def filehandle():
                 # Handler length of words
             if len(str(txt).split()[0::]) > 100:
                 error_message='Please reduce the length of text [30 - 100]'
+                too_long=''
                 os.remove('./'+filename)
-                return render_template('home.html', error_message=error_message)
+                return render_template('home.html', error_message=error_message, too_long=too_long)
             elif len(str(txt).split()[0::]) < 30:
                 error_message='Please increase the length of text [30 - 100]'
                 os.remove('./'+filename)
@@ -88,6 +89,17 @@ def filehandle():
                 txt2 = ' '.join(str(txt).split()[50::])
             except:
                 txt = ' '.join(str(txt).split()[0::])
+
+            # Network Handler
+            try:
+                try:
+                    result = google_search(txt, my_api_key, my_cse_id, num=2)
+                except:
+                    result = google_search(txt1, my_api_key, my_cse_id, num=2)
+                    result = google_search(txt2, my_api_key, my_cse_id, num=2)
+            except:
+                connection_problem='No internet connection'
+                return render_template('home.html', connection_problem=connection_problem)
             # Result handler
             try:
                 result1 = google_search(txt1, my_api_key, my_cse_id, num=2);result2 = google_search(txt2, my_api_key, my_cse_id, num=2)
@@ -164,7 +176,8 @@ def texthandle():
         # Handler length of text     
         if len(str(txt).split()[0::]) > 100:
             error_message='Please reduce the length of text [30 - 100]'
-            return render_template('home.html', error_message=error_message)
+            too_long=' '
+            return render_template('home.html', error_message=error_message, too_long=too_long)
         elif len(str(txt).split()[0::]) < 30:
             error_message='Please increase the length of text [30 - 100]'
             return render_template('home.html', error_message=error_message)
@@ -173,6 +186,12 @@ def texthandle():
             txt2 = ' '.join(str(txt).split()[50::])
         except:
             txt = ' '.join(str(txt).split()[0::])
+        # Network Handler
+        try:
+            result = google_search(txt, my_api_key, my_cse_id, num=2)
+        except:
+            connection_problem='No internet connection'
+            return render_template('home.html', connection_problem=connection_problem)
         # Result handler
         try:
             result1 = google_search(txt1, my_api_key, my_cse_id, num=2);result2 = google_search(txt2, my_api_key, my_cse_id, num=2)

@@ -40,30 +40,46 @@
 </head>
 <body>
     <!-------------------------------------------------|  GREETINGS  |-------------------------------------------------------------------->
-    <div class="container mb-0">
+    <div class="container mb-0" style="width: 70%;">
+      {% if connection_problem %}
+      <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" style="font-family: 'Josefin Sans', sans-serif;">
+        <strong>An error occurred!</strong> No internet access.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+      {% if end_result %}
+      <div class="alert alert-success alert-dismissible fade show mt-2" role="alert" style="font-family: 'Josefin Sans', sans-serif;">
+        <strong>All done!</strong> Please check your results below.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
     <div class="jumbotron mt-4 pt-6 pb-4 mb-2 bg-warning rounded-bottom">
         <h1 class="display-4" style="font-size: 4.3em;">Plagiarism Checker</h1>
         <p class="lead" style="font-family: 'Amatic SC', cursive; letter-spacing: 3px; font-weight: bold;">“When a thing has been said and said well, have no scruple. Take it and copy it.” <b class="b"> ― Anatole France</b></p>
         <hr class="my-4"> 
-        <p>Upload a file or copy a text between <b>30</b> to <b>100</b> length of words and hit the <b>search</b> button.</p>
+        <p>Upload a file or copy a text between <b>30</b> to <b>100</b> words in length and hit the <b>search</b> button.</p>
       </div>
       <!-------------------------------------------------|  FILE & TEXT  |-------------------------------------------------------------------->
       <div class="row mb-4 mt-4">
-        <div class="col-sm-6 mb-2">
+        <div class="col-sm-1 mb-2">
           <div class="card border-primary bg-dark rounded-bottom pb-5">
             <div class="card-body">
               <h5 class="card-title">File</h5>
               <form method="POST" class="col-sm-6" enctype="multipart/form-data" action="/file"><input type="file" name="myfile" style="color: #0fbcf9; padding: 2px;" id="myfile" style="color: #2f3640;" id="file-uploaded">
                 <button type="submit" class="btn btn-transparent" style="color: #0fbcf9; border: 1px solid #0fbcf9; margin-top: 1.5em;  margin-bottom: 4%;">Search</button></form>
-              <br><br><span class="p" style="font-family: 'Josefin Sans', sans-serif;">Supports: <span class="text-warning">.doc</span> <span class="text-success">.pdf</span> <span class="text-danger">.odt</span> <span class="text-warning">.docx</span> <span class="text-success">.txt</span>
+              <br><br><span class="p" style="font-family: 'Josefin Sans', sans-serif;">Supports <span class="text-warning">.doc</span> <span class="text-success">.pdf</span> <span class="text-danger">.odt</span> <span class="text-warning">.docx</span> <span class="text-success">.txt</span>
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-12 w-100">
           <div class="card border-primary bg-dark">
-            <div class="card-body">
+            <div class="card-body" style="min-width: 100%;">
               <h5 class="card-title">Text</h5>
-              <form method="POST" enctype="multipart/form-data" class="col-sm-6" action="/text"><textarea rows="10" cols="120" id="text" class="col-sm-6 col-md-12 col-lg-12" name="text" placeholder="Please enter your text here.." style="padding: 5px;">{{ text }}</textarea>
+              <form method="POST" enctype="multipart/form-data" class="col-sm-12" action="/text"><textarea rows="10" cols="120" id="text" class="col-sm-6 col-md-12 col-lg-12" name="text" placeholder="Please enter your text here.." style="padding: 5px;">{{ text }}</textarea>
                 <!--  <a href="/txt">submit</a> --><br><button type="submit" class="btn btn-transparent" style="color: #0fbcf9; border: 1px solid #0fbcf9; margin-top: 1.5em;">Search</button></form>
               
             </div>
@@ -106,13 +122,20 @@
       </div>
       <p class="p"><b>Comments: </b></p><span>{{ comments }}</span><p class="p"><b>Frequency: </b></p><span>{{ frequency }}</span>
       {% endif %}
-      {% if error_message %}
+      {% if error_message or too_long %}
       <div class="jumbotron bg-primary mb-6">
         <div class="dotted-container" style="border-radius: 10px; margin-top: 2em;"><p style="font-family: 'Courier New', Courier, monospace; font-size: 1.8em; color: white; font-family: 'Caveat', cursive;"><b>Text Length</b></p>
-      <span>{{ error_message }}</span>
+      {% if error_message %}
+          <span>{{ error_message }}</span>
+      {% endif %}
+      {% if too_long %}
+      <br><span>Click continue if you want to select the first <b>100</b> words of your text</span>
+      <br><button class="button-warning-md">Continue</button>
+      {% endif %}
       </div>
       </div>
       {% endif %}
+      
         </div>
     </div>
 
