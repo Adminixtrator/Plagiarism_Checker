@@ -10,8 +10,6 @@ import textract as tt
 extractor = URLExtract()
 my_api_key = "AIzaSyCaugQenN9PpH5I6agQTcFlkf8hbyAEOKw"
 my_cse_id = "000757437883487112859:wtcjp5mwqmu"
-regex = re.compile(r'\w+\://\w+\.\w+')
-gool = re.compile(r'\w+\.\w+')
 
 app = Flask(__name__, template_folder = './')
 
@@ -43,13 +41,6 @@ def google_search(search_term, api_key, cse_id, **kwargs):
         return ['No match', 'No match', 'No match']
 
 #---------------------------------------------------------------------
-#txt = input('Please enter or paste text below:\n')	#file
-#---------------------------------------------------------------------
-# Function to open txt
-def open_txt(filename,content):
-     a = open(filename,'r');c = a.read();a.close();content = c
-
-#---------------------------------------------------------------------
 # Homepage
 @app.route('/')
 def homepage():
@@ -74,11 +65,18 @@ def filehandle():
             myfile.save(os.path.join('./',filename))
             # read the file
             txt = tt.process(filename)
+            '''try:
+                txt = tt.process('filename')
+            except:
+                error_message = "An error occured! Please check your file type and try again."
+                os.remove('./'+filename)
+                return render_template('home.html', error_message=error_message, probables='None currently available')'''
             alternative = txt
                 # Handler length of words
             if len(str(txt).split()[0::]) > 100:
                 error_message='Please reduce the length of text [30 - 100]'
                 too_long=''
+
                 os.remove('./'+filename)
                 return render_template('home.html', error_message=error_message, too_long=too_long, alternative=alternative)
             elif len(str(txt).split()[0::]) < 30:
@@ -145,7 +143,10 @@ def filehandle():
                 comments = "Warning!! This text is plagiarised."
             #-------------------------------------------------------------------------------------------------------------------------------------------------frequency $ comments   ~~~~~~Done!
             try:
-                probables = end_result[5]
+                for guys in end_result:
+                    if not allowed_images(guys) and guys != end_result[2] and len(guys) >= 10:
+                        probables.append(guys)
+                probables = probables[0]
             except:
                 probables = ' '#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
             # Check for valid result
@@ -159,7 +160,7 @@ def filehandle():
             if probables == '' or probables == ' ':
                 probables = 'None currently available'
             os.remove('./'+filename)
-
+            
             return render_template('home.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
         
         else:
@@ -242,7 +243,10 @@ def texthandle():
             comments = "Warning!! This text is plagiarised."
         #-------------------------------------------------------------------------------------------------------------------------------------------------frequency $ comments   ~~~~~~Done!
         try:
-            probables = end_result[5]
+            for guys in end_result:
+                if not allowed_images(guys) and guys != end_result[2] and len(guys) >= 10:
+                    probables.append(guys)
+            probables = probables[0]
         except:
             probables = ' '#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
         # Check for valid result
@@ -253,10 +257,10 @@ def texthandle():
             end_result = "Some scrambled texts gotten, hence, no result found. \nPlease check your input and try again."
             frequency = '0%'	#-----------------------------exception 
 
-        if probables == '' or probables == ' ':
+        if probables == '' or probables == ' ' or allowed_images(probables):
             probables = 'None currently available'
 
-        return render_template('home.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
+        return render_template('home.html', frequency=frequency, comments=comments, probables=probables, probables_01=probables_01, probables_02=probables_02, end_result=end_result)
 
     return render_template('home.html')
     
@@ -322,7 +326,10 @@ def hundred():
         comments = "Warning!! This text is plagiarised."
     #-------------------------------------------------------------------------------------------------------------------------------------------------frequency $ comments   ~~~~~~Done!
     try:
-        probables = end_result[5]
+        for guys in end_result:
+            if not allowed_images(guys) and guys != end_result[2] and len(guys) >= 10:
+                probables.append(guys)
+        probables = probables[0]
     except:
         probables = ' '#-----------------------------------------------------------------------------------------------------------------probables    ~~~~~Done!
     # Check for valid result
@@ -336,7 +343,7 @@ def hundred():
     if probables == '' or probables == ' ':
         probables = 'None currently available'
 
-    return render_template('home.html', frequency=frequency, comments=comments, probables=probables, end_result=end_result)
+    return render_template('home.html', frequency=frequency, comments=comments, probables=probables, probables_01=probables_01, probables_02=probables_02, end_result=end_result)
 
 if __name__ == '__main__':
     app.run()

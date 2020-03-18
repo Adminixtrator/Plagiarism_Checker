@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="jpg/png" href="https://res.cloudinary.com/adminixtrator/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1580859216/87-872184_kommentit-eye-and-magnifying-glass.jpg">
+    <link rel="icon" type="jpg/png" href="https://img.icons8.com/cotton/2x/detective.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Cabin|Caveat|Courgette|Cuprum|Josefin+Sans|Satisfy&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
         }
         span,.card-body{
             color: #fff;
-            font-size: 0.9em;
+            font-size: 0.8em;
             font-family: 'Josefin Sans', sans-serif;
         }
         .p,.card-title{
@@ -38,11 +38,11 @@
     </style>
     <title>Plagiarism Checker</title>
 </head>
-<body>
+<body style="padding-left: 18%; padding-right: 18%;">
     <!-------------------------------------------------|  GREETINGS  |-------------------------------------------------------------------->
     <div class="container mb-0">
       {% if connection_problem %}
-      <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" style="font-family: 'Josefin Sans', sans-serif;">
+      <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" style="font-family: 'Josefin Sans', sans-serif; position: absolute;">
         <strong>An error occurred!</strong> I am unable to connect to the internet.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -50,7 +50,7 @@
       </div>
       {% endif %}
       {% if end_result %}
-      <div class="alert alert-success alert-dismissible fade show mt-2" role="alert" style="font-family: 'Josefin Sans', sans-serif;">
+      <div class="alert alert-success alert-dismissible fade show mt-2" role="alert" style="font-family: 'Josefin Sans', sans-serif; position: absolute;">
         <strong>All done!</strong> Please check your results below.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -69,7 +69,7 @@
           <div class="card border-primary bg-dark rounded-bottom pb-5">
             <div class="card-body">
               <h5 class="card-title">File</h5>
-              <form method="POST" class="col-sm-6" enctype="multipart/form-data" action="/file"><input type="file" name="myfile" style="color: #0fbcf9; padding: 2px;" id="myfile" style="color: #2f3640;" id="file-uploaded">
+              <form method="POST" class="col-sm-6" enctype="multipart/form-data" action="/file"><input type="file" accept="application/*, text/plain" name="myfile" style="color: #0fbcf9; padding: 2px;" id="myfile" style="color: #2f3640;" id="file-uploaded">
                 <button type="submit" class="btn btn-transparent" style="color: #0fbcf9; border: 1px solid #0fbcf9; margin-top: 1.5em;  margin-bottom: 4%;">Search</button></form>
               <br><br><span class="p" style="font-family: 'Josefin Sans', sans-serif;">Supports <span class="text-warning">.doc</span> <span class="text-success">.pdf</span> <span class="text-danger">.odt</span> <span class="text-warning">.docx</span> <span class="text-success">.txt</span>
             </div>
@@ -113,8 +113,13 @@
 
                     {% endif %}
          -->
-                  {{ probables }}
-                    
+                  {{ probables }}<br/>
+                  {% if probables_01 %}
+                  {{ probables_01 }}<br/>
+                  {% endif %}
+                  {% if probables_02 %}
+                  {{ probables_02 }}<br/>
+                  {% endif %}
             </div>
           </div>
         </div>
@@ -135,7 +140,7 @@
       <br><button type="submit" class="btn btn-warning btn-md">Continue</button>
       </form>
       {% endif %}
-      </div>
+      </div> 
       </div>
       {% endif %}
       
@@ -144,7 +149,7 @@
 
 
     <footer class="container mt-6 mb-4 pt-6" style="text-align: center; font-size: 0.8em; margin-top: 8em;">
-        <a href="https://twitter.com/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_30/v1580846986/twitter.jpg" alt="Twitter"></a>  <a href="https://linkedin.com/in/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_20/v1580846977/linkedin.png" alt="Github"></a>  <a href="https://github.com/adminixtrator" target="blank"><img src="https://res.cloudinary.com/adminixtrator/image/upload/c_scale,w_35/v1580865391/github.png" alt="linkedIn"></a><br>
+        <a href="https://twitter.com/adminixtrator" target="blank"><img src="https://img.icons8.com/ios-filled/2x/twitter-squared.png" width="30" alt="Twitter"></a>  <a href="https://linkedin.com/in/adminixtrator" target="blank"><img src="https://img.icons8.com/metro/2x/linkedin.png" width="30" alt="linkedIn"></a>  <a href="https://github.com/adminixtrator" target="blank"><img src="https://img.icons8.com/ios-glyphs/2x/github.png" width="30" alt="GitHub"></a><br>
         <span class="span">&copy;2020 ADMINIXTRATOR</span>
     </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
